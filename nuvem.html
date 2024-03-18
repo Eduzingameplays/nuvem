@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>consulta de cnpj</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+    <script src='main.js'></script>
+</head>
+
+<body>
+
+    <div class="main">
+        <h1 style="text-align: center;">Digite aqui o CNPJ a Ser Procurado</h1>
+        <br><br>
+
+        <input name="pesquisaCNPJ" id="pesquisaCNPJ" type="text" />
+        <input type="button" value="Buscar no Via CNPJ" onclick="buscarEnderecoNoReceitaWs()" />
+        <div id="dados"></div>
+        <br>
+    </div>
+
+
+</body>
+</html>
+
+<script>
+
+    function buscarEnderecoNoReceitaWs() {
+     var cnpj = document.getElementById("pesquisaCNPJ").value;
+     fetch("https://cors-anywhere.herokuapp.com/https://receitaws.com.br/v1/cnpj/" + cnpj).then((response) => {
+        if(response.ok) {
+            return response.json();
+        }
+     }).then((dados) => {
+        console.log(dados)
+        document.getElementById("dados").innerHTML = `
+            Nome: ${dados.nome} <br>
+            Complemento: ${dados.complemento}<br>
+            Nome Empresa: ${dados.fantasia} <br>
+            Municipio da Residencia da Empresa: ${dados.municipio}<br>
+            CEP: ${dados.cep} <br>
+            Logradouro: ${dados.logradouro}<br>
+            Bairro: ${dados.bairro}<br>
+            Fundação: ${dados.abertura}<br>
+            E-mail: ${dados.email}<br>
+            Telefone: ${dados.telefone}<br>
+            Natureza Juridica: ${dados.natureza_juridica}<br>
+
+
+
+        `
+     })
+    }
+    
+    </script>
